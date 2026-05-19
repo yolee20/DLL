@@ -1,2 +1,2 @@
-# DLL
-DLL by cade
+# LLM learnig
+LLM by cade
