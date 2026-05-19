@@ -1,0 +1,58 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: smartagent
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/smartagent?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: smartagent
+    password: Pwd123@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 6000ms
+  
+  ai:
+    openai:
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      api-key: sk-39a7e275668e44d792a0231751b01ca9
+      chat:
+        options:
+          model: qwen-max
+      embedding:
+        options:
+          model: text-embedding-v3
+
+milvus:
+  host: localhost
+  port: 19530
+  enabled: true
+
+agent:
+  intent-threshold: 0.7
+  max-history-length: 10
+  default-skill: QASkill
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    com.example.smartagent: DEBUG
+    org.springframework: INFO
