@@ -46,6 +46,12 @@ agent:
   max-history-length: 10
   default-skill: QASkill
 
+app:
+  mcp:
+    v2:
+      default-models:
+        enabled: true
+
 springdoc:
   api-docs:
     path: /api-docs
