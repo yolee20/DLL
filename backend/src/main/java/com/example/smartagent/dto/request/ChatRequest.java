@@ -1,4 +1,3 @@
-
 package com.example.smartagent.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
@@ -12,10 +11,15 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatRequest {
+
     @NotBlank(message = "消息内容不能为空")
     private String message;
-    
+
     private String sessionId;
-    
+
+    private String userId;
+
+    private String tenantId;
+
     private Map<String, Object> context;
 }

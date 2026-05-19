@@ -1,6 +1,6 @@
 package com.example.smartagent.skill.executor;
 
-import com.example.smartagent.service.LlmService;
+import com.example.smartagent.service.llm.LlmService;
 import com.example.smartagent.skill.SkillResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

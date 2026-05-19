@@ -4,13 +4,13 @@ server:
 spring:
   application:
     name: smartagent
-  
+
   datasource:
     url: jdbc:mysql://localhost:3306/smartagent?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: smartagent
     password: Pwd123@
     driver-class-name: com.mysql.cj.jdbc.Driver
-  
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -18,23 +18,29 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-  
+
   data:
     redis:
       host: localhost
       port: 6379
       timeout: 6000ms
-  
+
   ai:
     openai:
-      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
-      api-key: sk-39a7e275668e44d792a0231751b01ca9
+      base-url: ${OPENAI_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+      api-key: ${OPENAI_API_KEY:sk-39a7e275668e44d792a0231751b01ca9}
       chat:
         options:
           model: qwen-max
       embedding:
         options:
           model: text-embedding-v3
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
 
 milvus:
   host: localhost
@@ -52,6 +58,46 @@ app:
       default-models:
         enabled: true
 
+rag:
+  threshold: 0.75
+  top-k: 5
+
+session:
+  ttl-minutes: 30
+  max-history: 20
+
+rate-limit:
+  default:
+    qps: 10
+    tokens-per-minute: 5000
+  anonymous:
+    qps: 2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,metrics,info
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0
+    description: SmartAgent - AI智能代理系统 (支持Spring AI框架)
+
 springdoc:
   api-docs:
     path: /api-docs
@@ -62,3 +108,6 @@ logging:
   level:
     com.example.smartagent: DEBUG
     org.springframework: INFO
+    org.springframework.ai: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{traceId:-}] %-5level %logger{36} - %msg%n"

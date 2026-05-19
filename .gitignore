@@ -46,11 +46,11 @@ dist-ssr/
 Thumbs.db
 
 # Database
-*.sql
 *.db
 
 # Documentation
-*.md
+md/
+sql/
 
 # Configuration
 application-local.yml

@@ -1,7 +1,7 @@
 
 package com.example.smartagent.skill;
 
-import com.example.smartagent.entity.SkillRegistry;
+import com.example.smartagent.entity.SkillRegistryEntity;
 import com.example.smartagent.repository.SkillRegistryRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -21,38 +21,38 @@ public class SkillRegistryService {
     private final SkillRegistryRepository skillRegistryRepository;
     private final ObjectMapper objectMapper;
     
-    public List<SkillRegistry> getAllSkills() {
+    public List<SkillRegistryEntity> getAllSkills() {
         return skillRegistryRepository.findAll();
     }
     
-    public SkillRegistry getSkillByName(String name) {
+    public SkillRegistryEntity getSkillByName(String name) {
         return skillRegistryRepository.findByName(name)
                 .orElseThrow(() -> new RuntimeException("技能不存在: " + name));
     }
     
-    public SkillRegistry saveSkill(SkillRegistry skill) {
+    public SkillRegistryEntity saveSkill(SkillRegistryEntity skill) {
         return skillRegistryRepository.save(skill);
     }
     
     public void deleteSkill(String name) {
-        SkillRegistry skill = getSkillByName(name);
+        SkillRegistryEntity skill = getSkillByName(name);
         skillRegistryRepository.delete(skill);
     }
     
-    public SkillRegistry enableSkill(String name) {
-        SkillRegistry skill = getSkillByName(name);
+    public SkillRegistryEntity enableSkill(String name) {
+        SkillRegistryEntity skill = getSkillByName(name);
         skill.setEnabled(true);
         return skillRegistryRepository.save(skill);
     }
     
-    public SkillRegistry disableSkill(String name) {
-        SkillRegistry skill = getSkillByName(name);
+    public SkillRegistryEntity disableSkill(String name) {
+        SkillRegistryEntity skill = getSkillByName(name);
         skill.setEnabled(false);
         return skillRegistryRepository.save(skill);
     }
     
     public Set<String> getIntentPatterns(String skillName) {
-        SkillRegistry skill = getSkillByName(skillName);
+        SkillRegistryEntity skill = getSkillByName(skillName);
         try {
             return objectMapper.readValue(skill.getIntentPatterns(), 
                     new TypeReference<Set<String>>() {});
@@ -62,7 +62,7 @@ public class SkillRegistryService {
         }
     }
     
-    public List<SkillRegistry> getEnabledSkills() {
+    public List<SkillRegistryEntity> getEnabledSkills() {
         return skillRegistryRepository.findByEnabled(true);
     }
 }
